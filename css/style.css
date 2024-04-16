@@ -79,11 +79,12 @@ h1 {
 .stone {
     position: absolute;
     box-sizing: border-box;
-    width: calc(var(--board-size) / 14 - var(--gap));
-    height: calc(var(--board-size) / 14 - var(--gap));
+    cursor: pointer;
+    width: calc((var(--board-size) / 14 - var(--gap)) * 0.9);
+    height: calc((var(--board-size) / 14 - var(--gap)) * 0.9);
     border-radius: 50%;
     /* border: 1px solid black; */
-
+    transition: opacity 0.2s linear;
     opacity: 0;
 }
 
@@ -94,6 +95,16 @@ h1 {
 .stone:nth-child(2n + 1) {
     background-color: white;
 } */
+
+.white {    
+    opacity: 1;
+    background-color: white;
+}
+
+.black {
+    opacity: 1;
+    background-color: black;
+}
 
 #designed {
     text-align: center;
@@ -127,8 +138,8 @@ h1 {
     }
 
     .stone {
-        width: calc(var(--board-size-big) / 14 - var(--gap));
-        height: calc(var(--board-size-big) / 14 - var(--gap));
+        width: calc((var(--board-size-big) / 14 - var(--gap)) * 0.9);
+        height: calc((var(--board-size-big) / 14 - var(--gap)) * 0.9);
     }
 
     #designed {
