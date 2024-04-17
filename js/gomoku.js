@@ -11,8 +11,8 @@ const showBoard = () => document.body.style.opacity = 1;
 let initBoard = () => {
 
     board = Array.from({length: 15}, () => Array(15).fill(0));
-    // board.ajacentPlaces = [new Set(), new Set()];
-    board.ajacentPlaces = new Set();
+    // board.adjacentPlaces = [new Set(), new Set()];
+    board.adjacentPlaces = new Set();
 
 }
 
@@ -265,13 +265,13 @@ const win = (board, n) => {
 
             } else {
 
-                if (count == 5 && sequenceOf5(board, size, r, c, dr, dc, sequenceStart, j - 1)) return true;
+                if (count == 5 && sequenceOf5(board, r, c, dr, dc, sequenceStart, j - 1)) return true;
 
                 count = 0;
             }
         }
 
-        if (count == 5 && sequenceOf5(board, size, r, c, dr, dc, sequenceStart, 4)) return true;
+        if (count == 5 && sequenceOf5(board, r, c, dr, dc, sequenceStart, 4)) return true;
     }
 
     return false;
@@ -282,10 +282,15 @@ const sequenceOf5 = (board, r, c, dr, dc, startOffset, endOffset) => {
     let beforeRow = r + (startOffset - 1) * dr;
     let beforeCol = c + (startOffset - 1) * dc;
 
+    // console.log(beforeRow, beforeCol, r , c);
+
     if (beforeRow >= 0 && beforeRow < size && beforeCol >= 0 && beforeCol < size && board[beforeRow][beforeCol] == board[r][c]) return false;
     
     let afterRow = r + (endOffset + 1) * dr;
     let afterCol = c + (endOffset + 1) * dc;
+
+    // console.log(beforeRow, beforeCol, r , c);
+
 
     if (afterRow >= 0 && afterRow < size && afterCol >= 0 && afterCol < size && board[afterRow][afterCol] == board[r][c]) return false;
     
@@ -295,23 +300,104 @@ const sequenceOf5 = (board, r, c, dr, dc, startOffset, endOffset) => {
 const randomAI = (board) => {
 
     let ai = player == black ? white : black;
-    // let moves = [...board.ajacentPlaces[ai - 1]];
-    let moves = [...board.ajacentPlaces];
+    // let moves = [...board.adjacentPlaces[ai - 1]];
+    let moves = [...board.adjacentPlaces];
 
     return moves[Math.floor(Math.random() * moves.length)];
 }
 
+const freeCells = (board) => {
+
+    let count = 0;
+
+    for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+            if (board[i][j] == 0) count++;
+        }
+    }
+
+    return count;
+}
+
+const monteCarloAI = (board) => {
+
+    let startTime = Date.now();
+    let timeLimit = 500;
+    let stats = Array.from({length: 255}, () => [0, 0]);
+    let ai = player == black ? white : black;
+
+    do {
+
+        let tempBoard = board.map(arr => arr.slice());
+        tempBoard.adjacentPlaces = new Set(board.adjacentPlaces);
+        let color = ai;
+        firstMove = null;
+
+        do {
+
+            let moves = [...tempBoard.adjacentPlaces];
+
+            let n = moves[Math.floor(Math.random() * moves.length)];
+
+            if (n == undefined && firstMove == null) {
+                n = 113;
+            } else if (n == undefined) {
+                break;
+            }
+    
+            if (firstMove == null) firstMove = n;
+    
+            tempBoard[Math.floor(n / size)][n % size] = color;
+            tempBoard.adjacentPlaces.delete(n);
+
+            if (win(tempBoard, n)) {
+
+                let score = 100 * freeCells(tempBoard);
+
+                tempBoard[Math.floor(n / size)][n % size] == ai ? stats[firstMove][0] += score : stats[firstMove][0] -= score;
+
+                stats[firstMove][1]++;
+
+                break;
+            }
+
+            getAdjacentPlaces(tempBoard, n);
+
+            color = color == black ? white : black;
+    
+        } while(true);
+
+    } while (Date.now() - startTime <= timeLimit); 
+
+    let bestMove, bestValue = -Infinity; 
+
+    for (let i = 0; i < stats.length; i++) {
+
+        let [wins, visits] = stats[i];
+
+        if (visits == 0) continue;
+        if (wins / visits > bestValue) [bestValue, bestMove] = [wins / visits, i]
+    }
+
+    console.log(stats);
+
+    console.log(bestMove, bestValue);
+
+    return bestMove;
+}
+
 const aiMove = () => {
 
-    let n = randomAI(board);
+    // let n = randomAI(board);
+    let n = monteCarloAI(board);
     let ai = player == black ? white : black;
     let stones = document.querySelectorAll('.stone');
 
     board[Math.floor(n / size)][n % size] = ai;
 
-    board.ajacentPlaces.delete(n);
-    // board.ajacentPlaces[0].delete(n);
-    // board.ajacentPlaces[1].delete(n);
+    board.adjacentPlaces.delete(n);
+    // board.adjacentPlaces[0].delete(n);
+    // board.adjacentPlaces[1].delete(n);
 
 
     ai == black ? stones[n].classList.add('black') : stones[n].classList.add('white');
@@ -322,11 +408,11 @@ const aiMove = () => {
         return;
     };
 
-    getAjacentPlaces(board, n);
+    getAdjacentPlaces(board, n);
     enableTouch();
 }
 
-const getAjacentPlaces = (board, n) => {
+const getAdjacentPlaces = (board, n) => {
 
     let r = Math.floor(n / size);
     let c = n % size;
@@ -337,16 +423,16 @@ const getAjacentPlaces = (board, n) => {
             if (i == 0 && j == 0) continue;
             if ((Math.abs(i) == 1 && Math.abs(j) == 2) || (Math.abs(i) == 2 && Math.abs(j) == 1)) continue;
             if (r + i < 0 || r + i >= size || c + j < 0 || c + j >= size) continue;
-            if (board[r + i][c + j] == 0) board.ajacentPlaces.add((r + i) * size + c + j);
+            if (board[r + i][c + j] == 0) board.adjacentPlaces.add((r + i) * size + c + j);
 
             // if (board[r + i][c + j] != 0) continue;
             // if (Math.abs(i) == 2 || Math.abs(j) == 2) {
-            //     board.ajacentPlaces[board[r][c] - 1].add((r + i) * size + c + j);
+            //     board.adjacentPlaces[board[r][c] - 1].add((r + i) * size + c + j);
             //     continue;
             // }
 
-            // board.ajacentPlaces[0].add((r + i) * size + c + j);
-            // board.ajacentPlaces[1].add((r + i) * size + c + j);
+            // board.adjacentPlaces[0].add((r + i) * size + c + j);
+            // board.adjacentPlaces[1].add((r + i) * size + c + j);
         }
     }
 }
@@ -363,9 +449,9 @@ const makeMove = (e) => {
 
     board[Math.floor(n / size)][n % size] = player;
 
-    board.ajacentPlaces.delete(n);
-    // board.ajacentPlaces[0].delete(n);
-    // board.ajacentPlaces[1].delete(n);
+    board.adjacentPlaces.delete(n);
+    // board.adjacentPlaces[0].delete(n);
+    // board.adjacentPlaces[1].delete(n);
 
     if (win(board, n)) {
             
@@ -373,9 +459,9 @@ const makeMove = (e) => {
         return;
     }
 
-    getAjacentPlaces(board, n);
+    getAdjacentPlaces(board, n);
     disableTouch();
-    aiMove();
+    setTimeout(aiMove, 200);
 }
 
 const enableTouch = () => {
