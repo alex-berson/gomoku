@@ -8,6 +8,18 @@ let player = black;
 
 const showBoard = () => document.body.style.opacity = 1;
 
+const shuffle = (array) => {
+
+    for (let i = array.length - 1; i > 0; i--) {
+
+        let j = Math.trunc(Math.random() * (i + 1));
+
+        [array[i], array[j]] = [array[j], array[i]]; 
+    }
+
+    return array;
+}
+
 let initBoard = () => {
 
     board = Array.from({length: 15}, () => Array(15).fill(0));
@@ -352,9 +364,9 @@ const monteCarloAI = (board) => {
 
             if (win(tempBoard, n)) {
 
-                let score = 100 * freeCells(tempBoard);
+                // let score = 100 * freeCells(tempBoard);
 
-                tempBoard[Math.floor(n / size)][n % size] == ai ? stats[firstMove][0] += score : stats[firstMove][0] -= score;
+                tempBoard[Math.floor(n / size)][n % size] == ai ? stats[firstMove][0] += 1 : stats[firstMove][0] -= 1;
 
                 stats[firstMove][1]++;
 
@@ -376,6 +388,9 @@ const monteCarloAI = (board) => {
         let [wins, visits] = stats[i];
 
         if (visits == 0) continue;
+
+        console.log(i, wins, visits , wins / visits);
+
         if (wins / visits > bestValue) [bestValue, bestMove] = [wins / visits, i]
     }
 
@@ -388,9 +403,13 @@ const monteCarloAI = (board) => {
 
 const aiMove = () => {
 
-    // let n = randomAI(board);
-    let n = monteCarloAI(board);
     let ai = player == black ? white : black;
+
+    // let n = randomAI(board);
+    // let n = monteCarloAI(board);
+
+    let n = mcts(board, ai, Date.now(), 500);
+
     let stones = document.querySelectorAll('.stone');
 
     board[Math.floor(n / size)][n % size] = ai;
