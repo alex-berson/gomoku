@@ -78,10 +78,14 @@ h1 {
 
 .stone {
     position: absolute;
+    display: grid;
+    place-items: center;
     box-sizing: border-box;
     cursor: pointer;
     width: calc((var(--board-size) / 14 - var(--gap)) * 0.9);
     height: calc((var(--board-size) / 14 - var(--gap)) * 0.9);
+    font-size: calc((var(--board-size) / 14 - var(--gap)) * 0.5);
+    font-weight: bold;
     border-radius: 50%;
     /* border: 1px solid black; */
     transition: opacity 0.2s linear;
@@ -98,11 +102,13 @@ h1 {
 
 .white {    
     opacity: 1;
+    color: black;
     background-color: white;
 }
 
 .black {
     opacity: 1;
+    color: white;
     background-color: black;
 }
 
@@ -140,6 +146,7 @@ h1 {
     .stone {
         width: calc((var(--board-size-big) / 14 - var(--gap)) * 0.9);
         height: calc((var(--board-size-big) / 14 - var(--gap)) * 0.9);
+        font-size: calc((var(--board-size-big) / 14 - var(--gap)) * 0.5);
     }
 
     #designed {

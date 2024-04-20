@@ -89,12 +89,14 @@ const simulation = (node) => {
 
     tempBoard.adjacentPlaces = new Set(node.board.adjacentPlaces);
 
+    let i = 0
+
     do {
 
+        if (tempBoard.adjacentPlaces.size == 0) return null;
+        
         let moves = [...tempBoard.adjacentPlaces];
         let move = moves[Math.floor(Math.random() * moves.length)];
-
-        if (move == undefined) return 0;
 
         tempBoard[Math.floor(move / size)][move % size] = color;
 
@@ -105,6 +107,8 @@ const simulation = (node) => {
         if (win(tempBoard, move)) return color;
 
         color = color == black ? white : black;
+
+        i++
                 
     } while (true);
 }
@@ -149,14 +153,10 @@ const mcts = (board, color, startTime, timeLimit) => {
 
     for (let child of tree.children) {
 
-        // console.log(child.move, child.wins, child.plays, child.wins / child.plays);
-
         let value = child.wins / child.plays;
 
         if (value > bestValue) [bestValue, bestMove] = [value, child.move];
     }
-
-    console.log(bestMove, bestValue);
 
     return bestMove;
 }

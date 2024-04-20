@@ -22,7 +22,7 @@ const shuffle = (array) => {
 
 let initBoard = () => {
 
-    board = Array.from({length: 15}, () => Array(15).fill(0));
+    board = Array.from({length: size}, () => Array(size).fill(0));
     // board.adjacentPlaces = [new Set(), new Set()];
     board.adjacentPlaces = new Set();
 
@@ -335,7 +335,7 @@ const monteCarloAI = (board) => {
 
     let startTime = Date.now();
     let timeLimit = 500;
-    let stats = Array.from({length: 255}, () => [0, 0]);
+    let stats = Array.from({length: size ** 2}, () => [0, 0]);
     let ai = player == black ? white : black;
 
     do {
@@ -344,15 +344,15 @@ const monteCarloAI = (board) => {
         tempBoard.adjacentPlaces = new Set(board.adjacentPlaces);
         let color = ai;
         firstMove = null;
+        let i = 0
 
         do {
 
             let moves = [...tempBoard.adjacentPlaces];
-
             let n = moves[Math.floor(Math.random() * moves.length)];
 
             if (n == undefined && firstMove == null) {
-                n = 113;
+                n = Math.floor(size ** 2 / 2);
             } else if (n == undefined) {
                 break;
             }
@@ -364,9 +364,9 @@ const monteCarloAI = (board) => {
 
             if (win(tempBoard, n)) {
 
-                // let score = 100 * freeCells(tempBoard);
+                let score = 100 * freeCells(tempBoard);
 
-                tempBoard[Math.floor(n / size)][n % size] == ai ? stats[firstMove][0] += 1 : stats[firstMove][0] -= 1;
+                tempBoard[Math.floor(n / size)][n % size] == player ? stats[firstMove][0] += 1 : stats[firstMove][0] -= 1;
 
                 stats[firstMove][1]++;
 
@@ -376,12 +376,14 @@ const monteCarloAI = (board) => {
             getAdjacentPlaces(tempBoard, n);
 
             color = color == black ? white : black;
+
+            i++
     
-        } while(true);
+        } while(i < 10);
 
     } while (Date.now() - startTime <= timeLimit); 
 
-    let bestMove, bestValue = -Infinity; 
+    let bestMove, bestValue = Infinity; 
 
     for (let i = 0; i < stats.length; i++) {
 
@@ -391,7 +393,7 @@ const monteCarloAI = (board) => {
 
         console.log(i, wins, visits , wins / visits);
 
-        if (wins / visits > bestValue) [bestValue, bestMove] = [wins / visits, i]
+        if (wins / visits < bestValue) [bestValue, bestMove] = [wins / visits, i]
     }
 
     console.log(stats);
@@ -408,7 +410,9 @@ const aiMove = () => {
     // let n = randomAI(board);
     // let n = monteCarloAI(board);
 
-    let n = mcts(board, ai, Date.now(), 500);
+    // let n = mcts(board, ai, Date.now(), 500);
+
+    let n = minimax(board, Infinity, 500)
 
     let stones = document.querySelectorAll('.stone');
 
@@ -418,6 +422,7 @@ const aiMove = () => {
     // board.adjacentPlaces[0].delete(n);
     // board.adjacentPlaces[1].delete(n);
 
+    stones[n].innerText = size ** 2 - freeCells(board);
 
     ai == black ? stones[n].classList.add('black') : stones[n].classList.add('white');
 
@@ -462,15 +467,17 @@ const makeMove = (e) => {
     let stones = document.querySelectorAll('.stone');
     let n = [...stones].indexOf(stone);
 
-    if (stone.classList.contains('black') || stone.classList.contains('black')) return;
-
-    player == black ? stone.classList.add('black') : stone.classList.add('white');
+    if (stone.classList.contains('white') || stone.classList.contains('black')) return;
 
     board[Math.floor(n / size)][n % size] = player;
 
     board.adjacentPlaces.delete(n);
     // board.adjacentPlaces[0].delete(n);
     // board.adjacentPlaces[1].delete(n);
+
+    stone.innerText = size ** 2 - freeCells(board);
+
+    player == black ? stone.classList.add('black') : stone.classList.add('white');
 
     if (win(board, n)) {
             
