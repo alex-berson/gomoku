@@ -2,7 +2,7 @@ const createRoot = (board, color) => {
 
     let reversedColor = color == black ? white : black;
     let tempBoard = board.map(arr => arr.slice());
-    tempBoard.adjacentPlaces = new Set(board.adjacentPlaces);
+    // tempBoard.adjacentPlaces = new Set(board.adjacentPlaces);
 
     let root = {
         board: tempBoard,  
@@ -13,7 +13,7 @@ const createRoot = (board, color) => {
         children: [] 
     };
 
-    let moves = shuffle([...board.adjacentPlaces]);
+    // let moves = shuffle([...board.adjacentPlaces]);
 
     for (let move of moves) {
         createNode(root, color, move);
@@ -25,13 +25,13 @@ const createRoot = (board, color) => {
 const createNode = (node, color, move) => {
 
     let tempBoard = node.board.map(arr => arr.slice());
-    tempBoard.adjacentPlaces = new Set(node.board.adjacentPlaces);
+    // tempBoard.adjacentPlaces = new Set(node.board.adjacentPlaces);
     
     tempBoard[Math.floor(move / size)][move % size] = color;
 
-    tempBoard.adjacentPlaces.delete(move);
+    // tempBoard.adjacentPlaces.delete(move);
 
-    getAdjacentPlaces(tempBoard, move);
+    // getAdjacentPlaces(tempBoard, move);
 
     let newNode = {
         board: tempBoard,
@@ -71,7 +71,7 @@ const selection = (tree) => {
 const expansion = (node) => {
 
     let color = node.color == black ? white : black;
-    let moves = shuffle([...node.board.adjacentPlaces]);
+    // let moves = shuffle([...node.board.adjacentPlaces]);
 
     if (moves.length == 0) return node;
 
@@ -87,22 +87,22 @@ const simulation = (node) => {
     let color = node.color == black ? white : black;
     let tempBoard = node.board.map(arr => arr.slice());
 
-    tempBoard.adjacentPlaces = new Set(node.board.adjacentPlaces);
+    // tempBoard.adjacentPlaces = new Set(node.board.adjacentPlaces);
 
     let i = 0
 
     do {
 
-        if (tempBoard.adjacentPlaces.size == 0) return null;
+        // if (tempBoard.adjacentPlaces.size == 0) return null;
         
-        let moves = [...tempBoard.adjacentPlaces];
+        // let moves = [...tempBoard.adjacentPlaces];
         let move = moves[Math.floor(Math.random() * moves.length)];
 
         tempBoard[Math.floor(move / size)][move % size] = color;
 
-        tempBoard.adjacentPlaces.delete(move);
+        // tempBoard.adjacentPlaces.delete(move);
     
-        getAdjacentPlaces(tempBoard, move);
+        // getAdjacentPlaces(tempBoard, move);
         
         if (win(tempBoard, move)) return color;
 
@@ -127,7 +127,7 @@ const backprapogation = (node, color) => {
 
 const mcts = (board, color, startTime, timeLimit) => {
 
-    if (board.adjacentPlaces.size == 0) return null;
+    // if (board.adjacentPlaces.size == 0) return null;
 
     let tree = createRoot(board, color);
 
