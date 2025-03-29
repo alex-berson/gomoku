@@ -7,10 +7,6 @@ const setBoardSize = () => {
     let boardSize = Math.ceil(minSide * cssBoardSize / (SIZE - 1)) * (SIZE - 1);
 
     document.documentElement.style.setProperty('--board-size', `${boardSize}px`);
-
-    // console.log(boardSize);
-    // console.log((406 / 14 - 1) * 0.9);
-    // console.log((406 / 14 - 1) * 0.2);
 }
 
 const resizeWhitespace = () => {
@@ -27,19 +23,10 @@ const resizeWhitespace = () => {
             let bottom = inner.getBoundingClientRect().bottom;
             let cssWhitespace = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--whitespace'));
             let whitespace = Math.min(0, Math.max(edge + cssWhitespace - bottom, -20));
-            // let shortScreen = screen.width / screen.height > 0.5;
 
             if (!ua.includes('iPhone')) return;
-
-            // if (!ua.includes('iPhone') || window.innerHeight < window.innerWidth || edge == bottom) return;
             
             document.documentElement.style.setProperty('--whitespace', `${whitespace}px`);
-
-            // console.log('bottom', bottom); //
-            // console.log('edge', edge); //
-            // console.log('whitespace', whitespace); //  
-            
-            // alert('bottom: ' + bottom + ', edge: ' + edge + ', whitespace: ' + whitespace);
     });
 
     window.dispatchEvent(event);
@@ -153,11 +140,6 @@ const resetGame = (e) => {
 
     let button = e.currentTarget;
 
-    // if (button.classList.contains('blink')) return;
-
-    // button.classList.add('blink');
-    // button.addEventListener('animationend', () => button.classList.remove('blink'), {once: true});
-
     human = button.classList.contains('black') ? WHITE : BLACK;
 
     disableReset();
@@ -224,8 +206,6 @@ const clearBoard = async () => {
         stone.classList.add('disappear');
 
         stone.addEventListener('transitionend', () => {
-
-            stone.innerText = ''; //
 
             stone.classList.remove('black', 'white', 'win', 'disappear');
 
