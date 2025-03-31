@@ -33,12 +33,12 @@ const getMoves = (board) => {
     for (let r = 0; r < SIZE; r++) {
         for (let c = 0; c < SIZE; c++) {
 
-            if (board[r][c] == 0) continue;
+            if (board[r][c] == EMPTY) continue;
 
             for (let i = -1; i <= 1; i++) {
                 for (let j = -1; j <= 1; j++) {
                     if (r + i < 0 || r + i >= SIZE || c + j < 0 || c + j >= SIZE) continue;
-                    if (board[r + i][c + j] == 0) moves.add((r + i) * SIZE + c + j);
+                    if (board[r + i][c + j] == EMPTY) moves.add((r + i) * SIZE + c + j);
                 }
             }
         }
@@ -53,7 +53,7 @@ const numFreeCells = (board) => {
 
     for (let i = 0; i < SIZE; i++) {
         for (let j = 0; j < SIZE; j++) {
-            if (board[i][j] == 0) n++;
+            if (board[i][j] == EMPTY) n++;
         }
     }
 
@@ -105,14 +105,12 @@ const humanTurn = async (e) => {
     let n = Number(stone.dataset.n);
     let [r, c] = getCoords(n);
 
-    if (board[r][c] != 0) return;
+    if (board[r][c] != EMPTY) return;
 
     disableTouch();
     disableReset();
 
     board[r][c] = human;
-
-    // stone.innerText = SIZE ** 2 - numFreeCells(board); //
 
     if (gameOver(board, n)) {
 
@@ -144,8 +142,6 @@ const aiTurn = async () => {
     let [r, c] = getCoords(n);
 
     board[r][c] = ai;
-
-    // stone.innerText = SIZE ** 2 - numFreeCells(board); //
 
     if (gameOver(board, n)) {
 
@@ -182,7 +178,7 @@ const registerServiceWorker = () => {
 }
 
 const init = () => {
-
+    
     registerServiceWorker();
     resizeWhitespace();
     disableScreen();

@@ -89,11 +89,6 @@ h1 {
     width: calc(var(--board-size) / 14 - var(--line-width));
     height: calc(var(--board-size) / 14 - var(--line-width));
     background-color: var(--background-color);
-
-    color: var(--foreground-color);
-    /* color: transparent; */
-    font-size: calc(var(--board-size) / 14 / 2);
-    line-height: 80%;
 }
 
 .stone {
@@ -107,12 +102,6 @@ h1 {
     border-radius: 50%;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
-
-    font-size: calc((var(--board-size) / 14 - var(--line-width)) * 0.5);
-    font-weight: bold;
-
-    /* opacity: 1; */
-    /* background-color: black; */
 }
 
 .stone::after {
@@ -122,27 +111,18 @@ h1 {
     right: calc((var(--board-size) / 14 - var(--line-width)) * -0.05);
     top: calc((var(--board-size) / 14 - var(--line-width)) * -0.05);
     bottom: calc((var(--board-size) / 14 - var(--line-width)) * -0.05);
-
-    /* opacity: 0.5; */
-    /* background-color: red; */
 }
 
 .white {
     background-color: white;
     cursor: default;
     opacity: 1;
-
-    color: black;
-    /* color: transparent;  */
 }
 
 .black {
     background-color: black;
     cursor: default;
     opacity: 1;
-
-    color: white;
-    /* color: transparent;  */
 }
 
 .win {
@@ -154,7 +134,6 @@ h1 {
     background-color: black;
     border-color: white;
     transition: background-color 0.2s ease-in-out;
-   
 }
 
 .win.black {
@@ -208,15 +187,11 @@ h1 {
     .cell {
         width: calc(var(--board-size-big) / 14 - var(--line-width));
         height: calc(var(--board-size-big) / 14 - var(--line-width));
-
-        font-size: calc(var(--board-size-big) / 14 / 3);
     }
 
     .stone {
         width: calc((var(--board-size-big) / 14 - var(--line-width)) * 0.9);
         height: calc((var(--board-size-big) / 14 - var(--line-width)) * 0.9);
-
-        font-size: calc((var(--board-size-big) / 14 - var(--line-width)) * 0.5);
     }
 
     .stone::after {

@@ -17,7 +17,7 @@ const evaluateBoard = (board, maximizingPlayer) => {
 
             let color = count[BLACK] ? BLACK : WHITE;
 
-            if (c <= SIZE - 6 && board[r][c] == 0 && board[r][c + 5] == 0) {
+            if (c <= SIZE - 6 && board[r][c] == EMPTY && board[r][c + 5] == EMPTY) {
                 
                 count[color] == 4 ? threats[0][color - 1]++ : threats[2][color - 1]++;
 
@@ -52,7 +52,7 @@ const evaluateBoard = (board, maximizingPlayer) => {
 
             let color = count[BLACK] ? BLACK : WHITE;
 
-            if (r <= SIZE - 6 && board[r][c] == 0 && board[r + 5][c] == 0) {
+            if (r <= SIZE - 6 && board[r][c] == EMPTY && board[r + 5][c] == EMPTY) {
                 
                 count[color] == 4 ? threats[0][color - 1]++ : threats[2][color - 1]++;
 
@@ -87,7 +87,7 @@ const evaluateBoard = (board, maximizingPlayer) => {
 
             let color = count[BLACK] ? BLACK : WHITE;
 
-            if (r <= SIZE - 6 && c <= SIZE - 6 && board[r][c] == 0 && board[r + 5][c + 5] == 0) {
+            if (r <= SIZE - 6 && c <= SIZE - 6 && board[r][c] == EMPTY && board[r + 5][c + 5] == EMPTY) {
                 
                 count[color] == 4 ? threats[0][color - 1]++ : threats[2][color - 1]++;
 
@@ -124,7 +124,7 @@ const evaluateBoard = (board, maximizingPlayer) => {
 
             let color = count[BLACK] ? BLACK : WHITE;
 
-            if (r <= SIZE - 6 && c <= SIZE - 6 && board[r][c] == 0 && board[r + 5][c + 5] == 0) {
+            if (r <= SIZE - 6 && c <= SIZE - 6 && board[r][c] == EMPTY && board[r + 5][c + 5] == EMPTY) {
                 
                 count[color] == 4 ? threats[0][color - 1]++ : threats[2][color - 1]++;
 
@@ -161,7 +161,7 @@ const evaluateBoard = (board, maximizingPlayer) => {
 
             let color = count[BLACK] ? BLACK : WHITE;
 
-            if (r >= 5 && c <= SIZE - 6 && board[r][c] == 0 && board[r - 5][c + 5] == 0) {
+            if (r >= 5 && c <= SIZE - 6 && board[r][c] == EMPTY && board[r - 5][c + 5] == EMPTY) {
 
                 count[color] == 4 ? threats[0][color - 1]++ : threats[2][color - 1]++;
 
@@ -198,7 +198,7 @@ const evaluateBoard = (board, maximizingPlayer) => {
 
             let color = count[BLACK] ? BLACK : WHITE;
 
-            if (r >= 5 && c <= SIZE - 6 && board[r][c] == 0 && board[r - 5][c + 5] == 0) {
+            if (r >= 5 && c <= SIZE - 6 && board[r][c] == EMPTY && board[r - 5][c + 5] == EMPTY) {
 
                 count[color] == 4 ? threats[0][color - 1]++ : threats[2][color - 1]++;
 

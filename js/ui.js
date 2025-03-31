@@ -41,10 +41,6 @@ const createCells = () => {
 
         let cell = template.content.cloneNode(true);
 
-        // let cellEl = cell.querySelector('.cell'); //
-
-        // cellEl.textContent = i + Math.floor(i / (SIZE - 1)); //
-
         board.appendChild(cell);
     }
 }
@@ -128,8 +124,6 @@ const placeStone = (r, c, color) => {
         let n = r * SIZE + c;
         let stone = document.querySelectorAll('.stone')[n];
 
-        // stone.innerText = SIZE ** 2 - numFreeCells(board); //
-
         stone.classList.add(color == BLACK ? 'black' : 'white');
 
         stone.addEventListener('transitionend', resolve, {once: true});
@@ -211,7 +205,7 @@ const clearBoard = async () => {
 
             resolve();
 
-        }, { once: true });
+        }, {once: true});
     })));
 }
 

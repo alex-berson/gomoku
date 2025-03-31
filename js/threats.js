@@ -15,7 +15,7 @@ const getCostSquares = (board, color) => {
  
             if (count[color] < 3 || count[opponent] != 0) continue;
 
-            if (c <= SIZE - 7 && board[r][c] == 0 && board[r][c + 1] == 0 && board[r][c + 5] == 0 && board[r][c + 6] == 0) {
+            if (c <= SIZE - 7 && board[r][c] == EMPTY && board[r][c + 1] == EMPTY && board[r][c + 5] == EMPTY && board[r][c + 6] == EMPTY) {
 
                 costSquares3.add(r * SIZE + c + 1);
                 costSquares3.add(r * SIZE + c + 5);
@@ -25,7 +25,7 @@ const getCostSquares = (board, color) => {
                 continue;
             }
 
-            if (c <= SIZE - 7 && board[r][c] == 0 && board[r][c + 1] == 0 && board[r][c + 5] == 0 && board[r][c + 6] == color) {
+            if (c <= SIZE - 7 && board[r][c] == EMPTY && board[r][c + 1] == EMPTY && board[r][c + 5] == EMPTY && board[r][c + 6] == color) {
 
                 costSquares4.add(r * SIZE + c + 5);
 
@@ -34,7 +34,7 @@ const getCostSquares = (board, color) => {
                 continue;
             }
 
-            if (c <= SIZE - 6 && board[r][c] == 0 && board[r][c + 5] == 0) {
+            if (c <= SIZE - 6 && board[r][c] == EMPTY && board[r][c + 5] == EMPTY) {
 
                 if (count[color] == 3) {
 
@@ -85,7 +85,7 @@ const getCostSquares = (board, color) => {
  
             if (count[color] < 3 || count[opponent] != 0) continue;
 
-            if (r <= SIZE - 7 && board[r][c] == 0 && board[r + 1][c] == 0 && board[r + 5][c] == 0 && board[r + 6][c] == 0) {
+            if (r <= SIZE - 7 && board[r][c] == EMPTY && board[r + 1][c] == EMPTY && board[r + 5][c] == EMPTY && board[r + 6][c] == EMPTY) {
 
                 costSquares3.add((r + 1) * SIZE + c);
                 costSquares3.add((r + 5) * SIZE + c);
@@ -95,7 +95,7 @@ const getCostSquares = (board, color) => {
                 continue;
             }
 
-            if (r <= SIZE - 7 && board[r][c] == 0 && board[r + 1][c] == 0 && board[r + 5][c] == 0 && board[r + 6][c] == color) {
+            if (r <= SIZE - 7 && board[r][c] == EMPTY && board[r + 1][c] == EMPTY && board[r + 5][c] == EMPTY && board[r + 6][c] == color) {
 
                 costSquares4.add((r + 5) * SIZE + c);
 
@@ -104,7 +104,7 @@ const getCostSquares = (board, color) => {
                 continue;
             }
 
-            if (r <= SIZE - 6 && board[r][c] == 0 && board[r + 5][c] == 0) {
+            if (r <= SIZE - 6 && board[r][c] == EMPTY && board[r + 5][c] == EMPTY) {
 
                 if (count[color] == 3) {
 
@@ -155,7 +155,7 @@ const getCostSquares = (board, color) => {
 
             if (count[color] < 3 || count[opponent] != 0) continue;
 
-            if (r <= SIZE - 7 && c <= SIZE - 7 && board[r][c] == 0 && board[r + 1][c + 1] == 0 && board[r + 5][c + 5] == 0 && board[r + 6][c + 6] == 0) {
+            if (r <= SIZE - 7 && c <= SIZE - 7 && board[r][c] == EMPTY && board[r + 1][c + 1] == EMPTY && board[r + 5][c + 5] == EMPTY && board[r + 6][c + 6] == EMPTY) {
 
                 costSquares3.add((r + 1) * SIZE + c + 1);
                 costSquares3.add((r + 5) * SIZE + c + 5);
@@ -166,7 +166,7 @@ const getCostSquares = (board, color) => {
                 continue;
             }
 
-            if (r <= SIZE - 7 && c <= SIZE - 7 && board[r][c] == 0 && board[r + 1][c + 1] == 0 && board[r + 5][c + 5] == 0 && board[r + 6][c + 6] == color) {
+            if (r <= SIZE - 7 && c <= SIZE - 7 && board[r][c] == EMPTY && board[r + 1][c + 1] == EMPTY && board[r + 5][c + 5] == EMPTY && board[r + 6][c + 6] == color) {
 
                 costSquares4.add((r + 5) * SIZE + c + 5);
 
@@ -176,7 +176,7 @@ const getCostSquares = (board, color) => {
                 continue;
             }
 
-            if (r <= SIZE - 6 && c <= SIZE - 6 && board[r][c] == 0 && board[r + 5][c + 5] == 0) {
+            if (r <= SIZE - 6 && c <= SIZE - 6 && board[r][c] == EMPTY && board[r + 5][c + 5] == EMPTY) {
 
                 if (count[color] == 3) {
 
@@ -229,7 +229,7 @@ const getCostSquares = (board, color) => {
 
             if (count[color] < 3 || count[opponent] != 0) continue;
 
-            if (r <= SIZE - 7 && c <= SIZE - 7 && board[r][c] == 0 && board[r + 1][c + 1] == 0 && board[r + 5][c + 5] == 0 && board[r + 6][c + 6] == 0) {
+            if (r <= SIZE - 7 && c <= SIZE - 7 && board[r][c] == EMPTY && board[r + 1][c + 1] == EMPTY && board[r + 5][c + 5] == EMPTY && board[r + 6][c + 6] == EMPTY) {
 
                 costSquares3.add((r + 1) * SIZE + c + 1);
                 costSquares3.add((r + 5) * SIZE + c + 5);
@@ -240,7 +240,7 @@ const getCostSquares = (board, color) => {
                 continue;
             }
 
-            if (r <= SIZE - 7 && c <= SIZE - 7 && board[r][c] == 0 && board[r + 1][c + 1] == 0 && board[r + 5][c + 5] == 0 && board[r + 6][c + 6] == color) {
+            if (r <= SIZE - 7 && c <= SIZE - 7 && board[r][c] == EMPTY && board[r + 1][c + 1] == EMPTY && board[r + 5][c + 5] == EMPTY && board[r + 6][c + 6] == color) {
 
                 costSquares4.add((r + 5) * SIZE + c + 5);
 
@@ -250,7 +250,7 @@ const getCostSquares = (board, color) => {
                 continue;
             }
 
-            if (r <= SIZE - 6 && c <= SIZE - 6 && board[r][c] == 0 && board[r + 5][c + 5] == 0) {
+            if (r <= SIZE - 6 && c <= SIZE - 6 && board[r][c] == EMPTY && board[r + 5][c + 5] == EMPTY) {
 
                 if (count[color] == 3) {
 
@@ -303,7 +303,7 @@ const getCostSquares = (board, color) => {
 
             if (count[color] < 3 || count[opponent] != 0) continue;
 
-            if (r >= 6 && c <= SIZE - 7 && board[r][c] == 0 && board[r - 1][c + 1] == 0 && board[r - 5][c + 5] == 0 && board[r - 6][c + 6] == 0) {
+            if (r >= 6 && c <= SIZE - 7 && board[r][c] == EMPTY && board[r - 1][c + 1] == EMPTY && board[r - 5][c + 5] == EMPTY && board[r - 6][c + 6] == EMPTY) {
 
                 costSquares3.add((r - 1) * SIZE + c + 1);
                 costSquares3.add((r - 5) * SIZE + c + 5);
@@ -314,7 +314,7 @@ const getCostSquares = (board, color) => {
                 continue;
             }
 
-            if (r >= 6 && c <= SIZE - 7 && board[r][c] == 0 && board[r - 1][c + 1] == 0 && board[r - 5][c + 5] == 0 && board[r - 6][c + 6] == color) {
+            if (r >= 6 && c <= SIZE - 7 && board[r][c] == EMPTY && board[r - 1][c + 1] == EMPTY && board[r - 5][c + 5] == EMPTY && board[r - 6][c + 6] == color) {
 
                 costSquares4.add((r - 5) * SIZE + c + 5);
 
@@ -324,9 +324,10 @@ const getCostSquares = (board, color) => {
                 continue;
             }
 
-            if (r >= 5 && c <= SIZE - 6 && board[r][c] == 0 && board[r - 5][c + 5] == 0) {
+            if (r >= 5 && c <= SIZE - 6 && board[r][c] == EMPTY && board[r - 5][c + 5] == EMPTY) {
 
                 if (count[color] == 3) {
+                    
                     costSquares3.add(r * SIZE + c);
                     costSquares3.add((r - 5) * SIZE + c + 5);
 
@@ -376,7 +377,7 @@ const getCostSquares = (board, color) => {
 
             if (count[color] < 3 || count[opponent] != 0) continue;
 
-            if (r >= 6 && c <= SIZE - 7 && board[r][c] == 0 && board[r - 1][c + 1] == 0 && board[r - 5][c + 5] == 0 && board[r - 6][c + 6] == 0) {
+            if (r >= 6 && c <= SIZE - 7 && board[r][c] == EMPTY && board[r - 1][c + 1] == EMPTY && board[r - 5][c + 5] == EMPTY && board[r - 6][c + 6] == EMPTY) {
 
                 costSquares3.add((r - 1) * SIZE + c + 1);
                 costSquares3.add((r - 5) * SIZE + c + 5);
@@ -387,7 +388,7 @@ const getCostSquares = (board, color) => {
                 continue;
             }
 
-            if (r >= 6 && c <= SIZE - 7 && board[r][c] == 0 && board[r - 1][c + 1] == 0 && board[r - 5][c + 5] == 0 && board[r - 6][c + 6] == color) {
+            if (r >= 6 && c <= SIZE - 7 && board[r][c] == EMPTY && board[r - 1][c + 1] == EMPTY && board[r - 5][c + 5] == EMPTY && board[r - 6][c + 6] == color) {
 
                 costSquares4.add((r - 5) * SIZE + c + 5);
 
@@ -397,7 +398,7 @@ const getCostSquares = (board, color) => {
                 continue;
             }
 
-            if (r >= 5 && c <= SIZE - 6 && board[r][c] == 0 && board[r - 5][c + 5] == 0) {
+            if (r >= 5 && c <= SIZE - 6 && board[r][c] == EMPTY && board[r - 5][c + 5] == EMPTY) {
 
                 if (count[color] == 3) {
 
